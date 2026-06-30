@@ -6,7 +6,7 @@
 > **MCP connector** to expose it all as tools. Runs fully offline, **zero API keys**.
 
 [![CI](https://github.com/tahasiddiquii/hybrid-graph-rag/actions/workflows/ci.yml/badge.svg)](https://github.com/tahasiddiquii/hybrid-graph-rag/actions/workflows/ci.yml)
-![python](https://img.shields.io/badge/python-3.12-blue)
+![python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 Production RAG quality lives and dies on retrieval. This repo implements the two

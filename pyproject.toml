@@ -7,7 +7,7 @@ name = "hybrid-graph-rag"
 version = "0.1.0"
 description = "Hybrid (BM25 + dense + RRF) and graph retrieval with a labeled benchmark (recall@k / MRR / nDCG) and an MCP connector. Runs fully offline."
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Taha Siddiqui", email = "work.tahasiddiqui@gmail.com" }]
 keywords = ["rag", "retrieval", "hybrid-search", "bm25", "dense-retrieval", "reciprocal-rank-fusion", "knowledge-graph", "mcp"]
@@ -41,7 +41,7 @@ packages = ["src/hybrid_rag"]
 
 [tool.ruff]
 line-length = 110
-target-version = "py312"
+target-version = "py311"
 src = ["src", "tests"]
 
 [tool.ruff.lint]
