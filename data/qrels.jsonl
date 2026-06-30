@@ -1,0 +1,12 @@
+{"query": "how does BM25 rank documents", "relevant": ["bm25"]}
+{"query": "rewarding relevant results near the top of the ranking", "relevant": ["ndcg"]}
+{"query": "fusing lexical and semantic retrievers into one ranked list", "relevant": ["rrf", "hybrid-search"]}
+{"query": "encoding passages into vectors and retrieving by similarity", "relevant": ["dense-retrieval", "embeddings"]}
+{"query": "faithful grounding of generated claims in evidence", "relevant": ["faithfulness", "hallucination"]}
+{"query": "reasoning across connected entities and relationships", "relevant": ["knowledge-graph", "multi-hop"]}
+{"query": "approximate nearest neighbour lookup over embeddings", "relevant": ["vector-index"]}
+{"query": "splitting lengthy documents into focused passages", "relevant": ["chunking"]}
+{"query": "fraction of relevant docs found within the top results", "relevant": ["recall-at-k"]}
+{"query": "subword handling of rare morphological word variants", "relevant": ["tokenization"]}
+{"query": "letting an AI client call external tools", "relevant": ["mcp"]}
+{"query": "matching paraphrases instead of exact keywords", "relevant": ["semantic-search", "query-expansion"]}

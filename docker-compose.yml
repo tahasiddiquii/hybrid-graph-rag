@@ -1,0 +1,11 @@
+services:
+  benchmark:
+    build: .
+    image: hybrid-graph-rag:latest
+    command: ["benchmark"]
+
+  search:
+    build: .
+    image: hybrid-graph-rag:latest
+    entrypoint: ["hybrid-rag"]
+    command: ["search", "fuse lexical and semantic retrievers"]

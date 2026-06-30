@@ -1,0 +1,22 @@
+{"id": "bm25", "text": "BM25 is a bag-of-words ranking function that ranks documents by term frequency and inverse document frequency."}
+{"id": "dense-retrieval", "text": "Dense retrieval encodes queries and documents into embedding vectors and retrieves by cosine similarity."}
+{"id": "rrf", "text": "Reciprocal Rank Fusion (RRF) combines several ranked lists by summing reciprocal ranks, fusing lexical and semantic retrievers."}
+{"id": "hybrid-search", "text": "Hybrid search blends lexical and dense retrieval so exact term matches and semantic matches reinforce one another."}
+{"id": "reranking", "text": "A cross-encoder reranker rescores the top candidates by jointly reading the query and document for higher precision."}
+{"id": "embeddings", "text": "An embedding maps text into a vector space where semantically related passages sit close together."}
+{"id": "ndcg", "text": "Normalized Discounted Cumulative Gain rewards placing relevant documents near the top of the ranking."}
+{"id": "recall-at-k", "text": "Recall at k measures the fraction of relevant documents retrieved within the top k results."}
+{"id": "mrr", "text": "Mean Reciprocal Rank averages the reciprocal of the rank of the first relevant document."}
+{"id": "knowledge-graph", "text": "A knowledge graph stores entities as nodes and relationships as edges, enabling multi-hop reasoning."}
+{"id": "multi-hop", "text": "Multi-hop retrieval traverses graph relationships to gather evidence spread across several connected documents."}
+{"id": "chunking", "text": "Chunking splits long documents into passages so retrieval can return focused, relevant spans."}
+{"id": "vector-index", "text": "A vector index such as HNSW enables approximate nearest neighbor search over millions of embeddings."}
+{"id": "hallucination", "text": "Hallucination is when a model generates fluent text that is unsupported by the retrieved evidence."}
+{"id": "faithfulness", "text": "Faithfulness checks that every claim in a generated answer is grounded in the retrieved context."}
+{"id": "mcp", "text": "The Model Context Protocol is an open standard that lets AI clients call external tools and data sources."}
+{"id": "tokenization", "text": "Tokenization breaks text into tokens; subword tokenization handles rare and morphological word variants."}
+{"id": "query-expansion", "text": "Query expansion adds synonyms and related terms to a query to improve recall of relevant documents."}
+{"id": "evaluation", "text": "Offline retrieval evaluation relies on labeled query document relevance judgments called qrels."}
+{"id": "cosine-similarity", "text": "Cosine similarity measures the angle between two vectors while ignoring their magnitude."}
+{"id": "inverted-index", "text": "An inverted index maps each term to the list of documents that contain it for fast lexical lookup."}
+{"id": "semantic-search", "text": "Semantic search retrieves by meaning rather than exact keywords, matching paraphrases and synonyms."}

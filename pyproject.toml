@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hybrid-graph-rag"
+version = "0.1.0"
+description = "Hybrid (BM25 + dense + RRF) and graph retrieval with a labeled benchmark (recall@k / MRR / nDCG) and an MCP connector. Runs fully offline."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "Taha Siddiqui", email = "work.tahasiddiqui@gmail.com" }]
+keywords = ["rag", "retrieval", "hybrid-search", "bm25", "dense-retrieval", "reciprocal-rank-fusion", "knowledge-graph", "mcp"]
+
+dependencies = [
+    "rank-bm25>=0.2.2",
+    "numpy>=1.26",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.2",
+    "rich>=13.7",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dense = ["sentence-transformers>=2.2"]
+graph = ["neo4j>=5.0"]
+dev = [
+    "ruff>=0.6",
+    "pytest>=8.2",
+    "pre-commit>=3.7",
+]
+
+[project.scripts]
+hybrid-rag = "hybrid_rag.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/tahasiddiquii/hybrid-graph-rag"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hybrid_rag"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "C4"]
+ignore = ["E501", "B008", "UP042"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+addopts = "-q"
+testpaths = ["tests"]
