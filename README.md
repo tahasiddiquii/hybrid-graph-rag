@@ -10,8 +10,8 @@
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 Production RAG quality lives and dies on retrieval. This repo implements the two
-techniques that move the needle most — **hybrid (lexical + dense) fusion** and
-**graph multi-hop** — and, crucially, ships a benchmark so every claim is a number
+techniques that move the needle most, **hybrid (lexical + dense) fusion** and
+**graph multi-hop**, and, crucially, ships a benchmark so every claim is a number
 you can reproduce, not a vibe.
 
 ## What this demonstrates
@@ -63,7 +63,7 @@ hybrid-rag graph hybrid-search --hops 2   # multi-hop document gathering
 hybrid-rag mcp                    # print the MCP tool definitions + an example call
 ```
 
-Everything is deterministic and offline — no model downloads, no keys, no network.
+Everything is deterministic and offline: no model downloads, no keys, no network.
 
 ## The benchmark
 
@@ -80,7 +80,7 @@ Everything is deterministic and offline — no model downloads, no keys, no netw
 **Hybrid keeps BM25's recall and dense's first-rank precision, landing the best
 nDCG of all four systems** (`+0.022` over the best single retriever). RRF operates on
 *ranks*, not raw BM25/cosine scores, so a strong lexical hit and a strong semantic hit
-reinforce instead of fighting — robust across query types. Numbers are measured, not
+reinforce instead of fighting, robust across query types. Numbers are measured, not
 asserted; re-run to reproduce them exactly.
 
 ## Graph multi-hop
@@ -104,22 +104,22 @@ $ hybrid-rag graph hybrid-search --hops 2
 
 `RetrieverConnector` exposes `hybrid_search` and `multi_hop` as Model Context
 Protocol tools (schema + dispatch), ready to register with the official `mcp` server
-SDK so any MCP client — an IDE agent, Claude Desktop — can retrieve over this corpus.
+SDK so any MCP client (an IDE agent, Claude Desktop) can retrieve over this corpus.
 Kept dependency-free so it runs and tests offline.
 
 ## Design decisions
 
 - **Offline dense retrieval via the hashing trick.** Word tokens *and* character
   3-grams are feature-hashed into an L2-normalized vector. The char-n-grams give a
-  morphological signal (`rank`≈`ranking`≈`ranked`) that genuinely complements BM25's
-  exact matching — which is why fusion helps. Swap in `sentence-transformers` (the
+  morphological signal (rank, ranking, ranked) that genuinely complements BM25's
+  exact matching, which is why fusion helps. Swap in `sentence-transformers` (the
   `dense` extra) behind the same interface for real semantics.
 - **RRF over score-mixing.** Rank-based fusion needs no score normalization between
   incomparable retrievers and is hard to destabilize.
 - **Honest metrics.** Every number is measured by `run_benchmark` from the actual
-  retrievers; nothing is hardcoded. Hybrid *ties* BM25 on recall here — the win is in
+  retrievers; nothing is hardcoded. Hybrid *ties* BM25 on recall here, the win is in
   ranking quality (nDCG/MRR), and the report says so plainly.
-- **Pluggable backends.** Dense → sentence-transformers, graph → Neo4j (the `graph`
+- **Pluggable backends.** Dense to sentence-transformers, graph to Neo4j (the `graph`
   extra), all behind the in-repo interfaces.
 
 ## Layout
@@ -139,10 +139,10 @@ reports/       benchmark_report_example.md
 
 Part of a series on production LLM engineering:
 
-- [ai-harness](https://github.com/tahasiddiquii/ai-harness) — multi-stage agent harness (routing, guardrails, tools, evals).
-- [llm-eval-observability](https://github.com/tahasiddiquii/llm-eval-observability) — RAG evaluation + Langfuse observability.
-- [llm-guardrails-redteam](https://github.com/tahasiddiquii/llm-guardrails-redteam) — guardrails + red-team harness.
-- **hybrid-graph-rag** — this repo.
+- [ai-harness](https://github.com/tahasiddiquii/ai-harness): multi-stage agent harness (routing, guardrails, tools, evals).
+- [llm-eval-observability](https://github.com/tahasiddiquii/llm-eval-observability): RAG evaluation and Langfuse observability.
+- [llm-guardrails-redteam](https://github.com/tahasiddiquii/llm-guardrails-redteam): guardrails and red-team harness.
+- **hybrid-graph-rag**: this repo.
 
 ## License
 
