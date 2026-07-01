@@ -1,4 +1,4 @@
-"""Command-line entry point: ``hybrid-rag search|benchmark|graph|mcp|demo``."""
+"""Command-line entry point: ``hybrid-rag search|benchmark|graph|mcp|demo|download``."""
 
 from __future__ import annotations
 
@@ -16,10 +16,17 @@ def _cmd_search(args: argparse.Namespace) -> int:
     return 0
 
 
-def _cmd_benchmark(_: argparse.Namespace) -> int:
-    from hybrid_rag.benchmark import print_table, run_benchmark, write_report
+def _cmd_benchmark(args: argparse.Namespace) -> int:
+    from hybrid_rag.benchmark import print_table, run_benchmark, run_scifact_benchmark, write_report
 
-    report = run_benchmark()
+    if args.scifact:
+        report = run_scifact_benchmark()
+        dataset_label = "BEIR SciFact (5,183 docs, 300 test queries)"
+    else:
+        report = run_benchmark()
+        dataset_label = "synthetic corpus"
+
+    print(f"\nDataset: {dataset_label}")
     path = write_report(report)
     print_table(report)
     print(f"\nReport written to {path}")
@@ -64,6 +71,29 @@ def _cmd_demo(_: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_download(args: argparse.Namespace) -> int:
+    """Convert a local BEIR dataset download to hybrid-graph-rag format."""
+    from pathlib import Path
+
+    from hybrid_rag.ingest import convert_scifact
+
+    beir_dir = Path(args.beir_dir)
+    out_dir = (
+        Path(args.out_dir) if args.out_dir else Path(__file__).resolve().parents[3] / "data" / args.dataset
+    )
+
+    if args.dataset == "scifact":
+        counts = convert_scifact(beir_dir, out_dir)
+        print(f"Converted SciFact → {out_dir}")
+        print(f"  corpus:  {counts['docs']:,} docs")
+        print(f"  qrels:   {counts['queries']:,} queries")
+        print(f"  triples: {counts['triples']:,}")
+    else:
+        print(f"Unknown dataset: {args.dataset}. Supported: scifact", file=sys.stderr)
+        return 1
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="hybrid-rag", description="Hybrid + graph retrieval with a benchmark."
@@ -77,6 +107,9 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(func=_cmd_search)
 
     b = sub.add_parser("benchmark", help="Run the labeled retrieval benchmark + gate.")
+    b.add_argument(
+        "--scifact", action="store_true", help="Use real BEIR SciFact corpus instead of synthetic."
+    )
     b.set_defaults(func=_cmd_benchmark)
 
     g = sub.add_parser("graph", help="Multi-hop graph lookup from a concept.")
@@ -89,6 +122,12 @@ def main(argv: list[str] | None = None) -> int:
 
     d = sub.add_parser("demo", help="A few example searches.")
     d.set_defaults(func=_cmd_demo)
+
+    dl = sub.add_parser("download", help="Convert a local BEIR dataset download to hybrid-graph-rag format.")
+    dl.add_argument("dataset", choices=["scifact"], help="Dataset name.")
+    dl.add_argument("--beir-dir", required=True, help="Path to the unzipped BEIR dataset directory.")
+    dl.add_argument("--out-dir", default=None, help="Output directory (default: data/<dataset>/).")
+    dl.set_defaults(func=_cmd_download)
 
     args = parser.parse_args(argv)
     return int(args.func(args))

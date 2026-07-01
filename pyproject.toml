@@ -24,6 +24,7 @@ dependencies = [
 [project.optional-dependencies]
 dense = ["sentence-transformers>=2.2"]
 graph = ["neo4j>=5.0"]
+demo  = ["streamlit>=1.35"]
 dev = [
     "ruff>=0.6",
     "pytest>=8.2",

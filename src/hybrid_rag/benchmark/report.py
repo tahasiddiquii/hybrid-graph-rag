@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from hybrid_rag.benchmark.runner import THRESHOLDS, BenchmarkReport
+from hybrid_rag.benchmark.runner import BenchmarkReport
 
 _ROOT = Path(__file__).resolve().parents[3]
 REPORT = _ROOT / "reports" / "benchmark_report.md"
@@ -40,8 +40,8 @@ def write_report(report: BenchmarkReport, path: Path | None = None) -> Path:
         "| Metric | Value | Threshold | Pass |",
         "| --- | --- | --- | --- |",
     ]
-    for key, thr in THRESHOLDS.items():
-        val = report.aggregate[key]
+    for key, thr in report.thresholds.items():
+        val = report.aggregate.get(key, 0.0)
         lines.append(f"| {key} | {val:.3f} | {thr:.2f} | {'✅' if val >= thr else '❌'} |")
 
     lines += [

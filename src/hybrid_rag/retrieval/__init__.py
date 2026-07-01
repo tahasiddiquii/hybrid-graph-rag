@@ -9,14 +9,17 @@ from hybrid_rag.retrieval.base import Document, ScoredDoc, top_k
 from hybrid_rag.retrieval.bm25 import BM25Retriever
 from hybrid_rag.retrieval.dense import DenseRetriever
 from hybrid_rag.retrieval.fusion import lexical_rerank, reciprocal_rank_fusion
+from hybrid_rag.retrieval.graph_augmented import GraphAugmentedRetriever
 from hybrid_rag.retrieval.hybrid import HybridRetriever
 
-_CORPUS = Path(__file__).resolve().parents[3] / "data" / "corpus.jsonl"
+_ROOT = Path(__file__).resolve().parents[3]
+_CORPUS = _ROOT / "data" / "corpus.jsonl"
 
 __all__ = [
     "BM25Retriever",
     "DenseRetriever",
     "Document",
+    "GraphAugmentedRetriever",
     "HybridRetriever",
     "ScoredDoc",
     "lexical_rerank",

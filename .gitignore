@@ -24,5 +24,12 @@ htmlcov/
 .idea/
 .vscode/
 
+# Raw BEIR download (use data/scifact/ which is committed instead)
+data/scifact-raw/
+
+# HuggingFace / datasets cache
+~/.cache/huggingface/
+~/.cache/hybrid-rag/
+
 # Generated benchmark output (the committed *_example.md is the proof artifact)
 reports/benchmark_report.md

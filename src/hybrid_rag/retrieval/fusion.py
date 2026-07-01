@@ -18,13 +18,21 @@ def reciprocal_rank_fusion(
     rankings: list[list[ScoredDoc]],
     k: int = 10,
     k0: int = RRF_K0,
+    weights: list[float] | None = None,
 ) -> list[ScoredDoc]:
-    """Fuse multiple ranked lists into one via RRF."""
+    """Fuse multiple ranked lists into one via RRF.
+
+    ``weights`` controls the per-list contribution: a list with weight 0.7
+    contributes 0.7 / (k0 + rank) instead of the default 1.0 / (k0 + rank).
+    Equal weights (the default) reproduce the original symmetric RRF.
+    """
+    if weights is None:
+        weights = [1.0] * len(rankings)
     fused: dict[str, float] = {}
     texts: dict[str, str] = {}
-    for ranking in rankings:
+    for ranking, w in zip(rankings, weights, strict=True):
         for rank, doc in enumerate(ranking, start=1):
-            fused[doc.id] = fused.get(doc.id, 0.0) + 1.0 / (k0 + rank)
+            fused[doc.id] = fused.get(doc.id, 0.0) + w / (k0 + rank)
             texts.setdefault(doc.id, doc.text)
     merged = [ScoredDoc(doc_id, score, texts.get(doc_id, "")) for doc_id, score in fused.items()]
     return top_k(merged, k)
